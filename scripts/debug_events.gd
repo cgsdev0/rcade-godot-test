@@ -4,6 +4,7 @@ extends Control
 var jsJSON
 func _ready() -> void:
 	RCadeInput.spinner_event.connect(on_event)
+	RCadeInput.classic_event.connect(on_event)
 	jsJSON = JavaScriptBridge.get_interface("JSON")
 
 func on_event(data):

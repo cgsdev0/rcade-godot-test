@@ -3,18 +3,19 @@ extends Node
 var cb_classic_input
 var cb_spinner_input
 func _ready() -> void:
-	process_priority = -10000
-	call_deferred("setup")
-
-var viewport: Viewport
-func setup():
 	if OS.has_feature("rcade"):
-		viewport = get_viewport()
-		cb_classic_input = JavaScriptBridge.create_callback(on_classic_event)
-		cb_spinner_input = JavaScriptBridge.create_callback(on_spinner_event)
-		var rcade = JavaScriptBridge.get_interface("RCadeInput")
-		rcade.register_classic(cb_classic_input)
-		rcade.register_spinner(cb_spinner_input)
+		process_priority = -10000
+		call_deferred("setup")
+	else:
+		process_mode = Node.PROCESS_MODE_DISABLED
+
+func setup():
+	cb_classic_input = JavaScriptBridge.create_callback(on_classic_event)
+	cb_spinner_input = JavaScriptBridge.create_callback(on_spinner_event)
+	var rcade = JavaScriptBridge.get_interface("RCadeInput")
+	rcade.register_classic(cb_classic_input)
+	rcade.register_spinner(cb_spinner_input)
+
 
 signal classic_event(data)
 signal spinner_event(data)
