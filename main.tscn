@@ -4,6 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://dktqs6xc4pst0" path="res://scripts/debug_events.gd" id="3_h2yge"]
 
+[sub_resource type="Theme" id="Theme_h2yge"]
+default_font_size = 8
+
 [node name="Node2D" type="Node" unique_id=422408999]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1727476714]
@@ -29,3 +32,4 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 320.0
 grow_horizontal = 2
+theme = SubResource("Theme_h2yge")

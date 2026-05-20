@@ -28,8 +28,7 @@ func on_event(args: Array):
 		var state = _data.get(key, false)
 		if state != data.pressed:
 			_data[key] = data.pressed
-			var ev := InputEventAction.new()
-			ev.action = key
-			ev.pressed = data.pressed
-			Input.parse_input_event(ev)
-			print(ev)
+			if data.pressed:
+				Input.action_press(key)
+			else:
+				Input.action_release(key)
