@@ -39,11 +39,11 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: build
-          path: ./dist/Web/*
+          path: ./dist/rcade/*
 
         # --- end my changes
         #
       - name: Deploy to RCade
         uses: fcjr/rcade/action-deploy@main
         with:
-          artifactPath: ./dist/Web/
+          artifactPath: ./dist/rcade/
