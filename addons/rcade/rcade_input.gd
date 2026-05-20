@@ -1,6 +1,7 @@
 extends Node
 
-var cb
+var cb_classic_input
+var cb_spinner_input
 func _ready() -> void:
 	process_priority = -10000
 	call_deferred("setup")
@@ -9,11 +10,14 @@ var viewport: Viewport
 func setup():
 	if OS.has_feature("rcade"):
 		viewport = get_viewport()
-		cb = JavaScriptBridge.create_callback(on_event)
+		cb_classic_input = JavaScriptBridge.create_callback(on_classic_event)
+		cb_spinner_input = JavaScriptBridge.create_callback(on_spinner_event)
 		var rcade = JavaScriptBridge.get_interface("RCadeInput")
-		rcade.register(cb)
+		rcade.register_classic(cb_classic_input)
+		rcade.register_spinner(cb_spinner_input)
 
-signal event(data)
+signal classic_event(data)
+signal spinner_event(data)
 
 var _data = {}
 
@@ -23,16 +27,24 @@ func _process(_delta: float) -> void:
 			Input.action_press(action)
 		else:
 			Input.action_release(action)
-			
-func on_event(args: Array):
+
+func on_spinner_event(args: Array):
 	var data = args[0].data
-	event.emit(data)
+	spinner_event.emit(data)
+	
+func on_classic_event(args: Array):
+	var data = args[0].data
+	classic_event.emit(data)
 	# type: "button" | "system"
 	# player: 1 | 2
 	# button: string
 	# pressed: boolean
+	var key
 	if data.type == "button":
-		var key = "p" + str(data.player) + "_" + data.button.to_lower()
+		key = "p" + str(data.player) + "_" + data.button.to_lower()
+	elif data.type == "system":
+		key = data.button.to_lower()
+	if key:
 		var state = _data.get(key, false)
 		if state != data.pressed:
 			_data[key] = data.pressed

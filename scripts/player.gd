@@ -7,5 +7,6 @@ func get_input():
 	velocity = input_direction * speed
 
 func _physics_process(delta):
+	$Icon.modulate = Color.RED if Input.is_action_pressed("one_player") else Color.WHITE
 	get_input()
 	move_and_slide()
