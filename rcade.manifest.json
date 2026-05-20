@@ -1,0 +1,18 @@
+{
+  "$schema": "https://rcade.dev/manifest.schema.json",
+  "name": "godot-test",
+  "display_name": "Godot Test",
+  "description": "trying to make a godot template",
+  "visibility": "private",
+  "authors": [
+    {
+      "display_name": "sarah schulte"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "@rcade/input-classic",
+      "version": "1.0.0"
+    }
+  ]
+}
