@@ -2,6 +2,7 @@ extends Node
 
 var cb
 func _ready() -> void:
+	process_priority = -10000
 	call_deferred("setup")
 
 var viewport: Viewport
@@ -16,6 +17,13 @@ signal event(data)
 
 var _data = {}
 
+func _process(_delta: float) -> void:
+	for action in _data:
+		if _data[action]:
+			Input.action_press(action)
+		else:
+			Input.action_release(action)
+			
 func on_event(args: Array):
 	var data = args[0].data
 	event.emit(data)
