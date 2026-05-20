@@ -121,8 +121,8 @@ window.RCadeInput = {
   register: (cb) => {
     channel.getPort().addEventListener('message', cb);
     console.log("callback registered!");
-    console.log(cb);
-    cb({ data: "test event" });
+    // console.log(cb);
+    // cb({ data: { player: 1, button: "LEFT", pressed: true, type: "button" } });
   }
 };
 const engine = new Engine(GODOT_CONFIG);

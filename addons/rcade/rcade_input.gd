@@ -31,4 +31,5 @@ func on_event(args: Array):
 			var ev := InputEventAction.new()
 			ev.action = key
 			ev.pressed = data.pressed
-			viewport.push_input(ev)
+			Input.parse_input_event(ev)
+			print(ev)
