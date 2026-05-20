@@ -14,7 +14,7 @@ func setup():
 	cb_spinner_input = JavaScriptBridge.create_callback(on_spinner_event)
 	var rcade = JavaScriptBridge.get_interface("RCadeInput")
 	rcade.register_classic(cb_classic_input)
-	rcade.register_spinner(cb_spinner_input)
+	rcade.register_spinners(cb_spinner_input)
 
 
 signal classic_event(data)

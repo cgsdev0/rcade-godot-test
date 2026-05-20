@@ -116,14 +116,13 @@ window.PluginChannel=class _PluginChannel{port;channel;pendingRequests=new Map;s
 		<script type="module">
 const GODOT_CONFIG = $GODOT_CONFIG;
 const GODOT_THREADS_ENABLED = $GODOT_THREADS_ENABLED;
-
-// hooks for RCade input
 window.RCadeInput = {
   register_classic: async (cb) => {
     const classic_channel = await PluginChannel.acquire("@rcade/input-classic", "^1.0.0");
     classic_channel.getPort().addEventListener('message', cb);
-  }
-  register_spinner: async (cb) => {
+    // cb({ data: { player: 1, button: "LEFT", pressed: true, type: "button" } });
+  },
+  register_spinners: async (cb) => {
     const spinner_channel = await PluginChannel.acquire("@rcade/input-spinners", "^1.0.0");
     spinner_channel.getPort().addEventListener('message', cb);
   }
