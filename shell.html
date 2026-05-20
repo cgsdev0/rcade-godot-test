@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <meta charset="UTF-8">
+    <style>
+        html {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script src="$GODOT_URL"></script>
+    <script>
+        window.RCadeInput = {
+          register: (cb) => {
+            window.addEventListener('message', cb);
+          };
+        };
+        var engine = new Engine($GODOT_CONFIG);
+        engine.startGame();
+    </script>
+
+</body>
+
+</html>
