@@ -22,7 +22,16 @@ signal spinner_event(data)
 
 var _data = {}
 
+# HACK: i hate this but im not sure how to make it work
+# reliably without
 func _process(_delta: float) -> void:
+	for action in _data:
+		if _data[action]:
+			Input.action_press(action)
+		else:
+			Input.action_release(action)
+			
+func _physics_process(_delta: float) -> void:
 	for action in _data:
 		if _data[action]:
 			Input.action_press(action)
