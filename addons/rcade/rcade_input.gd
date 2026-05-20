@@ -5,6 +5,11 @@ var cb_spinner_input
 func _ready() -> void:
 	if OS.has_feature("rcade"):
 		process_priority = -10000
+		for a in ["p1_", "p2_"]:
+			for b in ["left", "right", "up", "down", "a", "b"]:
+				InputMap.action_erase_events(a + b)
+		for key in ["one_player", "two_player"]:
+			InputMap.action_erase_events(key)
 		call_deferred("setup")
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
@@ -24,19 +29,19 @@ var _data = {}
 
 # HACK: i hate this but im not sure how to make it work
 # reliably without
-func _process(_delta: float) -> void:
-	for action in _data:
-		if _data[action]:
-			Input.action_press(action)
-		else:
-			Input.action_release(action)
-			
-func _physics_process(_delta: float) -> void:
-	for action in _data:
-		if _data[action]:
-			Input.action_press(action)
-		else:
-			Input.action_release(action)
+#func _process(_delta: float) -> void:
+	#for action in _data:
+		#if _data[action]:
+			#Input.action_press(action)
+		#else:
+			#Input.action_release(action)
+			#
+#func _physics_process(_delta: float) -> void:
+	#for action in _data:
+		#if _data[action]:
+			#Input.action_press(action)
+		#else:
+			#Input.action_release(action)
 
 func on_spinner_event(args: Array):
 	var data = args[0].data
