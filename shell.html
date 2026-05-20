@@ -116,13 +116,14 @@ window.PluginChannel=class _PluginChannel{port;channel;pendingRequests=new Map;s
 		<script type="module">
 const GODOT_CONFIG = $GODOT_CONFIG;
 const GODOT_THREADS_ENABLED = $GODOT_THREADS_ENABLED;
-const classic_channel = await PluginChannel.acquire("@rcade/input-classic", "^1.0.0");
 window.RCadeInput = {
-  register_classic: (cb) => {
+  register_classic: async (cb) => {
+    const classic_channel = await PluginChannel.acquire("@rcade/input-classic", "^1.0.0");
     classic_channel.getPort().addEventListener('message', cb);
-    console.log("callback registered!");
-    // console.log(cb);
-    // cb({ data: { player: 1, button: "LEFT", pressed: true, type: "button" } });
+  }
+  register_spinner: async (cb) => {
+    const spinner_channel = await PluginChannel.acquire("@rcade/input-spinners", "^1.0.0");
+    spinner_channel.getPort().addEventListener('message', cb);
   }
 };
 const engine = new Engine(GODOT_CONFIG);
