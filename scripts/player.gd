@@ -8,6 +8,7 @@ func get_input():
 
 func _physics_process(delta):
 	$Icon.modulate = Color.RED if Input.is_action_pressed("one_player") else Color.WHITE
-	$Icon.modulate = Color.GREEN if Input.is_action_just_pressed("p1_a") else $Icon.modulate
+	if Input.is_action_just_pressed("p1_a"):
+		rotate(PI / 4.0)
 	get_input()
 	move_and_slide()

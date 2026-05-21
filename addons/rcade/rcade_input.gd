@@ -5,11 +5,11 @@ var cb_spinner_input
 func _ready() -> void:
 	if OS.has_feature("rcade"):
 		process_priority = -10000
-		for a in ["p1_", "p2_"]:
-			for b in ["left", "right", "up", "down", "a", "b"]:
-				InputMap.action_erase_events(a + b)
-		for key in ["one_player", "two_player"]:
-			InputMap.action_erase_events(key)
+		#for a in ["p1_", "p2_"]:
+			#for b in ["left", "right", "up", "down", "a", "b"]:
+				#InputMap.action_erase_events(a + b)
+		#for key in ["one_player", "two_player"]:
+			#InputMap.action_erase_events(key)
 		call_deferred("setup")
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
@@ -63,7 +63,7 @@ func on_classic_event(args: Array):
 		var state = _data.get(key, false)
 		if state != data.pressed:
 			_data[key] = data.pressed
-			if data.pressed:
-				Input.action_press(key)
-			else:
-				Input.action_release(key)
+			var ev = InputEventAction.new()
+			ev.action = key
+			ev.pressed = data.pressed
+			Input.parse_input_event(ev)
