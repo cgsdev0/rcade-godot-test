@@ -42,11 +42,12 @@ func on_classic_event(args: Array):
 		key = data.button.to_lower()
 	if key:
 		var state = _data.get(key, false)
-		if state != data.pressed:
-			_data[key] = data.pressed
+		var pressed = bool(data.pressed)
+		if state != pressed:
+			_data[key] = pressed
 			var events = InputMap.action_get_events(key)
 			var ev = InputEventAction.new()
 			ev.action = key
-			ev.pressed = data.pressed
+			ev.pressed = bool(pressed)
 			ev.strength = 1.0
 			Input.parse_input_event(ev)
