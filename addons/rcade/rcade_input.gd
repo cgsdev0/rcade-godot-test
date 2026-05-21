@@ -51,3 +51,6 @@ func on_classic_event(args: Array):
 			ev.pressed = bool(pressed)
 			ev.strength = 1.0
 			Input.parse_input_event(ev)
+			debug.emit("pressed: " + str(pressed))
+			
+signal debug(msg)
