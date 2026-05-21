@@ -42,8 +42,13 @@ func on_classic_event(args: Array):
 		var state = _data.get(key, false)
 		if state != data.pressed:
 			_data[key] = data.pressed
-			var ev = InputEventAction.new()
-			ev.action = key
-			ev.pressed = data.pressed
-			ev.event_index = 0
-			Input.parse_input_event(ev)
+			var events = InputMap.action_get_events(key)
+			if events.size() > 0:
+				var ev = events[0].duplicate()
+				ev.pressed = data.pressed
+				Input.parse_input_event(ev)
+			#var ev = InputEventAction.new()
+			#ev.action = key
+			#ev.pressed = data.pressed
+			#ev.event_index = 0
+			#Input.parse_input_event(ev)
