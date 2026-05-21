@@ -3,7 +3,7 @@
   "name": "godot-test",
   "display_name": "Godot Test",
   "description": "trying to make a godot template",
-  "visibility": "public",
+  "visibility": "internal",
   "authors": [
     {
       "display_name": "sarah schulte"
