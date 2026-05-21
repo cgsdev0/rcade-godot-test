@@ -127,7 +127,6 @@ window.RCadeInput = {
     spinner_channel.getPort().addEventListener('message', cb);
   }
 };
-document.getElementById('canvas').focus();
 const engine = new Engine(GODOT_CONFIG);
 
 (function () {
@@ -226,6 +225,9 @@ const engine = new Engine(GODOT_CONFIG);
 			},
 		}).then(() => {
 			setStatusMode('hidden');
+			setTimeout(() => {
+				document.getElementById('canvas').focus();
+			}, 0);
 		}, displayFailureNotice);
 	}
 })();
