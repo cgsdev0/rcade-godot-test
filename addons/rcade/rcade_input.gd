@@ -42,7 +42,7 @@ var _acc_delta = [0, 0]
 var _angles = [0.0, 0.0]
 
 func _update_angle(idx, delta):
-	var diff = (delta / STEP_RESOLUTION) * 2 * PI
+	var diff = (delta / float(STEP_RESOLUTION)) * 2 * PI
 	_angles[idx] = fposmod(_angles[idx] + diff, 2 * PI)
 	
 func on_spinner_event(args: Array):
