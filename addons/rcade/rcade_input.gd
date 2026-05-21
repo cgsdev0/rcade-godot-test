@@ -67,3 +67,7 @@ func on_classic_event(args: Array):
 			ev.action = key
 			ev.pressed = data.pressed
 			Input.parse_input_event(ev)
+			if data.pressed:
+				Input.action_press(key)
+			else:
+				Input.action_release(key)
