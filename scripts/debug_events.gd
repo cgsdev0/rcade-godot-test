@@ -3,8 +3,6 @@ extends Control
 
 var jsJSON
 func _ready() -> void:
-	RCadeInput.spinner_event.connect(on_event)
-	RCadeInput.classic_event.connect(on_event)
 	RCadeInput.debug.connect(on_debug)
 	jsJSON = JavaScriptBridge.get_interface("JSON")
 
@@ -20,3 +18,16 @@ func on_event(data):
 	l.text = jsJSON.stringify(data)
 	$VBoxContainer.add_child(l)
 	$VBoxContainer.move_child(l, 0)
+
+func _process(delta):
+	$RichTextLabel.text = "
+		angle1: %f
+		angle2: %f
+		speed 1: %f
+		speed 2: %f
+	" % [
+		RCadeInput.get_spinner_angle(1),
+		RCadeInput.get_spinner_angle(2),
+		RCadeInput.get_spinner_speed(1),
+		RCadeInput.get_spinner_speed(2)
+	]
