@@ -5,6 +5,8 @@ var cb_spinner_input
 func _ready() -> void:
 	if OS.has_feature("rcade"):
 		Input.use_accumulated_input = false
+		for action in InputMap.get_actions():
+			InputMap.action_erase_events(action)
 		call_deferred("setup")
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
@@ -43,13 +45,8 @@ func on_classic_event(args: Array):
 		if state != data.pressed:
 			_data[key] = data.pressed
 			var events = InputMap.action_get_events(key)
-			if events.size() > 0:
-				var ev = events[0].duplicate()
-				ev.pressed = data.pressed
-				Input.parse_input_event(ev)
-				Input.flush_buffered_events()
-			#var ev = InputEventAction.new()
-			#ev.action = key
-			#ev.pressed = data.pressed
-			#ev.event_index = 0
-			#Input.parse_input_event(ev)
+			var ev = InputEventAction.new()
+			ev.action = key
+			ev.pressed = data.pressed
+			ev.strength = 1.0
+			Input.parse_input_event(ev)
