@@ -1,39 +1,37 @@
 extends Node
 
-var cb_classic_input
-var cb_spinner_input
+var _cb_classic_input
+var _cb_spinner_input
 
 const STEP_RESOLUTION = 64
 
-func _ready() -> void:
+func _ready():
 	if OS.has_feature("rcade"):
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_NO_FOCUS, false)
 		process_priority = -10000
-		#for action in InputMap.get_actions():
-			#InputMap.action_erase_events(action)
-		call_deferred("setup")
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
+		
+func enable_classic_controls() -> void:
+	if OS.has_feature("rcade"):
+		call_deferred("_setup_classic")
 
-func setup():
-	cb_classic_input = JavaScriptBridge.create_callback(on_classic_event)
-	cb_spinner_input = JavaScriptBridge.create_callback(on_spinner_event)
+func enable_spinners() -> void:
+	if OS.has_feature("rcade"):
+		call_deferred("_setup_spinners")
+
+func _setup_classic():
+	_cb_classic_input = JavaScriptBridge.create_callback(_on_classic_event)
 	var rcade = JavaScriptBridge.get_interface("RCadeInput")
-	rcade.register_classic(cb_classic_input)
-	rcade.register_spinners(cb_spinner_input)
+	rcade.register_classic(_cb_classic_input)
+	
+func _setup_spinners():
+	_cb_spinner_input = JavaScriptBridge.create_callback(_on_spinner_event)
+	var rcade = JavaScriptBridge.get_interface("RCadeInput")
+	rcade.register_spinners(_cb_spinner_input)
 
 
 var _data = {}
-
-func _notification(what):
-	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
-		debug.emit("APP FOCUS OUT")
-	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
-		debug.emit("APP FOCUS IN")
-	elif what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
-		debug.emit("WM FOCUS OUT")
-	elif what == NOTIFICATION_WM_WINDOW_FOCUS_IN:
-		debug.emit("WM FOCUS IN")
 
 const BUFFER_SIZE = 5
 var _deltas = [[0], [0]]
@@ -45,9 +43,7 @@ func _update_angle(idx, delta):
 	var diff = (delta / float(STEP_RESOLUTION)) * 2 * PI
 	_angles[idx] = fposmod(_angles[idx] + diff, 2 * PI)
 	
-func on_spinner_event(args: Array):
-	# spinner1_step_delta
-	# type: "spinners"
+func _on_spinner_event(args: Array):
 	var data = args[0].data
 	if data.type == "spinners":
 		_acc_delta[0] += data.spinner1_step_delta
@@ -78,7 +74,7 @@ func get_spinner_speed(idx: int) -> float:
 func get_spinner_angle(idx: int) -> float:
 	return _angles[idx - 1]
 	
-func on_classic_event(args: Array):
+func _on_classic_event(args: Array):
 	var data = args[0].data
 	# type: "button" | "system"
 	# player: 1 | 2
@@ -100,6 +96,3 @@ func on_classic_event(args: Array):
 			ev.pressed = bool(pressed)
 			ev.strength = 1.0
 			Input.parse_input_event(ev)
-			debug.emit("pressed: " + str(pressed))
-			
-signal debug(msg)
