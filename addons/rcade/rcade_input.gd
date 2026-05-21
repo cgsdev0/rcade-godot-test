@@ -24,6 +24,12 @@ signal spinner_event(data)
 
 var _data = {}
 
+func _notification(what):
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		debug.emit("APP FOCUS OUT")
+	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		debug.emit("APP FOCUS IN")
+		
 func on_spinner_event(args: Array):
 	var data = args[0].data
 	spinner_event.emit(data)
