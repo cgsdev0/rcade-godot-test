@@ -47,6 +47,7 @@ func on_classic_event(args: Array):
 				var ev = events[0].duplicate()
 				ev.pressed = data.pressed
 				Input.parse_input_event(ev)
+				Input.flush_buffered_events()
 			#var ev = InputEventAction.new()
 			#ev.action = key
 			#ev.pressed = data.pressed
