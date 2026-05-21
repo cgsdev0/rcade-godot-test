@@ -5,8 +5,8 @@ var cb_spinner_input
 func _ready() -> void:
 	if OS.has_feature("rcade"):
 		Input.use_accumulated_input = false
-		for action in InputMap.get_actions():
-			InputMap.action_erase_events(action)
+		#for action in InputMap.get_actions():
+			#InputMap.action_erase_events(action)
 		call_deferred("setup")
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
@@ -29,6 +29,10 @@ func _notification(what):
 		debug.emit("APP FOCUS OUT")
 	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
 		debug.emit("APP FOCUS IN")
+	elif what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+		debug.emit("WM FOCUS OUT")
+	elif what == NOTIFICATION_WM_WINDOW_FOCUS_IN:
+		debug.emit("WM FOCUS IN")
 		
 func on_spinner_event(args: Array):
 	var data = args[0].data
