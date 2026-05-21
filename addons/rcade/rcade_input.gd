@@ -4,6 +4,7 @@ var cb_classic_input
 var cb_spinner_input
 func _ready() -> void:
 	if OS.has_feature("rcade"):
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_NO_FOCUS, false)
 		Input.use_accumulated_input = false
 		#for action in InputMap.get_actions():
 			#InputMap.action_erase_events(action)
