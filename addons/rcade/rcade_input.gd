@@ -11,13 +11,17 @@ func _ready():
 		process_priority = -10000
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
-		
+
+var _classic_enabled = false
 func enable_classic_controls() -> void:
-	if OS.has_feature("rcade"):
+	if OS.has_feature("rcade") && !_classic_enabled:
+		_classic_enabled = true
 		call_deferred("_setup_classic")
 
+var _spinners_enabled = false
 func enable_spinners() -> void:
-	if OS.has_feature("rcade"):
+	if OS.has_feature("rcade") && !_spinners_enabled:
+		_spinners_enabled = true
 		call_deferred("_setup_spinners")
 
 func _setup_classic():
