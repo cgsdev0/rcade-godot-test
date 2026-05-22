@@ -117,14 +117,25 @@ window.PluginChannel=class _PluginChannel{port;channel;pendingRequests=new Map;s
 const GODOT_CONFIG = $GODOT_CONFIG;
 const GODOT_THREADS_ENABLED = $GODOT_THREADS_ENABLED;
 
+const MARQUEE_WIDTH = 128;
+const MARQUEE_HEIGHT = 32;
+
+const marquee_channel = await PluginChannel.acquire("@rcade/marquee", "^1.0.0");
 window.RCadeInput = {
   register_classic: async (cb) => {
-    const classic_channel = await PluginChannel.acquire("@rcade/input-classic", "^1.0.0");
-    classic_channel.getPort().addEventListener('message', cb);
+	const classic_channel = await PluginChannel.acquire("@rcade/input-classic", "^1.0.0");
+	classic_channel.getPort().addEventListener('message', cb);
   },
   register_spinners: async (cb) => {
-    const spinner_channel = await PluginChannel.acquire("@rcade/input-spinners", "^1.0.0");
-    spinner_channel.getPort().addEventListener('message', cb);
+	const spinner_channel = await PluginChannel.acquire("@rcade/input-spinners", "^1.0.0");
+	spinner_channel.getPort().addEventListener('message', cb);
+  },
+  buf: new Uint8Array(MARQUEE_WIDTH * MARQUEE_HEIGHT * 3),
+  take: () => {
+    channel.getPort().postMessage({ type: "take", width: MARQUEE_WIDTH, height: MARQUEE_HEIGHT });
+  },
+  flip: () => {
+	marquee_channel.getPort().postMessage({ type: "apply", frame: window.RCadeInput.buf });
   }
 };
 

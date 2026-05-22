@@ -25,16 +25,6 @@ func setup():
 
 var _data = {}
 
-func _notification(what):
-	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
-		debug.emit("APP FOCUS OUT")
-	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
-		debug.emit("APP FOCUS IN")
-	elif what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
-		debug.emit("WM FOCUS OUT")
-	elif what == NOTIFICATION_WM_WINDOW_FOCUS_IN:
-		debug.emit("WM FOCUS IN")
-
 const BUFFER_SIZE = 5
 var _deltas = [[0], [0]]
 var _sums = [0, 0]
