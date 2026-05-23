@@ -7,7 +7,7 @@ var buf
 var marquee
 func _ready() -> void:
 	$Label/AnimationPlayer.play("marquee")
-	if OS.has_feature("web"):
+	if OS.has_feature("rcade"):
 		enabled = true
 		marquee = JavaScriptBridge.get_interface("RCadeInput")
 		marquee.take()
