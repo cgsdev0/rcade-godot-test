@@ -132,7 +132,7 @@ window.RCadeInput = {
   },
   buf: new Uint8Array(MARQUEE_WIDTH * MARQUEE_HEIGHT * 3),
   take: () => {
-    channel.getPort().postMessage({ type: "take", width: MARQUEE_WIDTH, height: MARQUEE_HEIGHT });
+    marquee_channel.getPort().postMessage({ type: "take", width: MARQUEE_WIDTH, height: MARQUEE_HEIGHT });
   },
   flip: () => {
 	marquee_channel.getPort().postMessage({ type: "apply", frame: window.RCadeInput.buf });
